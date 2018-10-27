@@ -1,6 +1,5 @@
 <template>
-  <v-toolbar>
-    <v-toolbar-side-icon></v-toolbar-side-icon>
+  <v-toolbar dark color="black">
     <v-toolbar-title>Bookman</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">

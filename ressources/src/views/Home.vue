@@ -3,7 +3,7 @@
     <h1>This is your bookmark manager 🚀</h1>
     <br>
     <p>We create this webapp to allow you to manage your bookmarks easily <br>
-      We did it for the Node Knockout hackaton</p>
+      We also did it for the Node Knockout hackaton</p>
   </div>
 </template>
 
@@ -11,3 +11,11 @@
   export default {}
 
 </script>
+
+<style>
+.container {
+  text-align: center;
+  padding: 10%;
+}
+</style>
+
