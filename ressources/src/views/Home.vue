@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" id="home">
     <h1>This is your bookmark manager 🚀</h1>
     <br>
     <p>We create this webapp to allow you to manage your bookmarks easily <br>
@@ -13,7 +13,7 @@
 </script>
 
 <style>
-.container {
+#home {
   text-align: center;
   padding: 10%;
 }

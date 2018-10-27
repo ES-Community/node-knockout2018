@@ -1,11 +1,41 @@
 <template>
-<div class="container">
-  <h1>Login page</h1>
-</div>
+  <v-container fluid fill-height>
+    <v-layout align-center justify-center>
+      <v-card>
+        <v-toolbar dark color="black">
+          <v-toolbar-title>Login</v-toolbar-title>
+        </v-toolbar>
+        <v-card-text>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-container>
+              <v-text-field prepend-icon="person" v-model="email" label="E-mail" name="email" required solo></v-text-field>
+              <v-text-field prepend-icon="lock" v-model="password" label="Password" :append-icon="show1 ? 'visibility_off' : 'visibility'" :type="show1 ? 'text' : 'password'"
+                name="password" @click:append="show1 = !show1" required solo></v-text-field>
+              <v-btn @click="submit">
+                submit
+              </v-btn>
+            </v-container>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 export default {
+  data() {
+      return {
+        email: '',
+        password: '',
+        show1: false
+      }
+    },
 
+    methods: {
+      submit() {
+        //
+      }
+    }
 }
 </script>
