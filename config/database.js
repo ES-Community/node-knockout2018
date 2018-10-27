@@ -3,6 +3,9 @@
 const Env = use('Env')
 const Helpers = use('Helpers')
 
+const Url = require('url-parse')
+const PSTGRE_SQL_URL = new Url(Env.get('DATABASE_URL'))
+
 module.exports = {
   /*
   |--------------------------------------------------------------------------
@@ -13,7 +16,13 @@ module.exports = {
   | interacting with SQL databases.
   |
   */
-  connection: Env.get('DB_CONNECTION', 'sqlite'),
+  connection: {
+    host: Env.get('DB_HOST', PSTGRE_SQL_URL.host),
+    port: Env.get('DB_PORT', ''),
+    user: Env.get('DB_USER', PSTGRE_SQL_URL.username),
+    password: Env.get('DB_PASSWORD', PSTGRE_SQL_URL.password),
+    database: Env.get('DB_DATABASE', PSTGRE_SQL_URL.pathname.substr(1))
+  } ,
 
   /*
   |--------------------------------------------------------------------------
