@@ -26,6 +26,7 @@
     "cross-env": "^5.2.0",
     "nuxt": "^2.0.0",
     "pg": "^7.6.0",
+    "sqlite3": "^4.0.3",
     "url-parse": "^1.4.3"
   },
   "devDependencies": {
