@@ -1,33 +1,23 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/signup">Signup</router-link>
-  </div>
+  <v-toolbar>
+    <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-toolbar-title>Bookman</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn flat to="/">Home</v-btn>
+      <v-btn flat to="/about">About</v-btn>
+      <v-btn flat to="/login">Login</v-btn>
+      <v-btn flat to="/signup">Signup</v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
 </template>
 
 <script>
-export default {
-  name: 'Navbar',
-  mounted () {
-    console.log('Hello')
+  export default {
+    name: 'Navbar',
+    mounted() {
+      console.log('Hello')
+    }
   }
-}
+
 </script>
-
-
-<style>
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
