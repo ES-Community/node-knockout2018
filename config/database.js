@@ -22,7 +22,7 @@ module.exports = {
     user: Env.get('DB_USER', PSTGRE_SQL_URL.username),
     password: Env.get('DB_PASSWORD', PSTGRE_SQL_URL.password),
     database: Env.get('DB_DATABASE', PSTGRE_SQL_URL.pathname.substr(1))
-  } ,
+  },
 
   /*
   |--------------------------------------------------------------------------
@@ -49,7 +49,8 @@ module.exports = {
   |--------------------------------------------------------------------------
   |
   | Here we define connection settings for MySQL database.
-  |
+  |    client: 'pg',
+
   | npm i --save mysql
   |
   */
@@ -77,11 +78,11 @@ module.exports = {
   pg: {
     client: 'pg',
     connection: {
-      host: Env.get('DB_HOST', 'localhost'),
+      host: Env.get('DB_HOST', PSTGRE_SQL_URL.host),
       port: Env.get('DB_PORT', ''),
-      user: Env.get('DB_USER', 'root'),
-      password: Env.get('DB_PASSWORD', ''),
-      database: Env.get('DB_DATABASE', 'adonis')
+      user: Env.get('DB_USER', PSTGRE_SQL_URL.username),
+      password: Env.get('DB_PASSWORD', PSTGRE_SQL_URL.password),
+      database: Env.get('DB_DATABASE', PSTGRE_SQL_URL.pathname.substr(1))
     }
   }
 }
