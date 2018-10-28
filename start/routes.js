@@ -17,6 +17,6 @@
 const Route = use('Route')
 
 Route.post('/signup', 'AuthController.signup')
-Route.post('/login', 'LoginController.login')
+Route.post('/login', 'AuthController.login')
 
 Route.resource('bookmarks', 'BookmarksController')
