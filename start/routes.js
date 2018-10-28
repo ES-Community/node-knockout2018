@@ -21,4 +21,4 @@ Route.post('/login', 'AuthController.login')
 Route.get('/logout', 'AuthController.logout')
 Route.get('/isconnected', 'AuthController.isconnected')
 
-Route.resource('bookmarks', 'BookmarksController')
+Route.resource('bookmarks', 'BookmarksController').apiOnly()

@@ -59,7 +59,7 @@
               </v-list-tile-content>
 
               <v-list-tile-action>
-                <v-btn icon ripple>
+                <v-btn icon ripple @click="deleteItem(item.id)">
                   <v-icon color="red">fas fa-trash</v-icon>
                 </v-btn>
               </v-list-tile-action>
@@ -103,13 +103,20 @@
           body: JSON.stringify({title: this.title, subtitle: this.subtitle, link: this.link})
         })
         .then(res => res.json())
-        .then(body => { this.items = body; this.title = ''; this.subtitle = ''; this.link = '' })
+        .then(body => { this.items = body; this.dialog = false; this.title = ''; this.subtitle = ''; this.link = ''; })
+      },
+      deleteItem(id) {
+        fetch(`/bookmarks/${id}`, {
+          method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(body => this.items = body)
       }
     },
     mounted() {
-      /*fetch('/isconnected')
+      fetch('/isconnected')
       .then(res => res.text())
-      .then(body => body == 'connected' ? this.isConnected = true : this.isConnected = false)*/
+      .then(body => body == 'connected' ? this.isConnected = true : this.isConnected = false)
       console.log(1);
 
       fetch('/bookmarks')

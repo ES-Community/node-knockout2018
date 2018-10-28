@@ -106,7 +106,12 @@ class BookmarkController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, response, auth }) {
+    await auth.getUser()
+    const user = await User.find(auth.user.id)
+    const bookmark = await user.bookmarks().where('id', params.id).delete()
+    const bookmarks = await user.bookmarks().fetch()
+    return response.json(bookmarks)
   }
 }
 

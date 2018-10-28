@@ -40,7 +40,7 @@ export default {
 
     methods: {
       submit() {
-        fetch('/login', {
+        fetch('http://localhost:3333/login', {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
           body: JSON.stringify({uid: this.email, password: this.password})
