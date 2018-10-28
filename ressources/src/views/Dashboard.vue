@@ -13,7 +13,7 @@
   export default {
     methods: {
       logout() {
-        fetch('http://localhost:3333/logout')
+        fetch('/logout')
         .then(res => res.text())
         .then(body => body == 'loggedout' ? router.push('/') : console.log('not logged out'))
       }
