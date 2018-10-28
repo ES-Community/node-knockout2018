@@ -1,10 +1,23 @@
 <template>
-  <h1>Dashboard Page</h1>
+  <v-container>
+    <h1>Dashboard page</h1>
+    <v-btn @click="logout" color="danger">
+      logout
+    </v-btn>
+  </v-container>
 </template>
 
 <script>
-export default {
+  import router from '@/router'
 
-}
+  export default {
+    methods: {
+      logout() {
+        fetch('http://localhost:3333/logout')
+        .then(res => res.text())
+        .then(body => body == 'loggedout' ? router.push('/') : console.log('not logged out'))
+      }
+    }
+  }
+
 </script>
-

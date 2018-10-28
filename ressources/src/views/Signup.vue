@@ -1,14 +1,14 @@
 <template>
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
-      <v-alert :value="error" type="error">
-        Something got wrong with your credentials
-      </v-alert>
       <v-card>
         <v-toolbar dark color="black">
           <v-toolbar-title>Signup</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
+          <v-alert :value="error" type="error">
+            Something got wrong with your credentials
+          </v-alert>
           <v-form ref="form">
             <v-container>
               <v-text-field prepend-icon="person" v-model="email" label="E-mail" required solo></v-text-field>
@@ -30,6 +30,7 @@
 
 <script>
   import router from '@/router'
+
   export default {
 
     data() {
@@ -45,7 +46,7 @@
 
     methods: {
       submit() {
-        fetch('/signup', {
+        fetch('http://localhost:3333/signup', {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify({
