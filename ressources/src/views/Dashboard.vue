@@ -58,11 +58,47 @@
                 <v-list-tile-sub-title>{{ item.subtitle }} - <a v-bind:href="item.link">{{ item.link }}</a></v-list-tile-sub-title>
               </v-list-tile-content>
 
-              <v-list-tile-action>
-                <v-btn icon ripple @click="deleteItem(item.id)">
-                  <v-icon color="red">fas fa-trash</v-icon>
-                </v-btn>
-              </v-list-tile-action>
+              <v-list-tile-actions>
+                <v-layout wrap>
+                  <v-flex xs6>
+                    <v-dialog v-model="edit_dialog" persistent max-width="600px" @keydown.esc="edit_dialog = false">
+                      <v-btn icon ripple slot="activator" @click="editItem(item.id)">
+                        <v-icon color="blue">fas fa-pencil-alt</v-icon>
+                      </v-btn>
+                      <v-card>
+                        <v-card-title dark color="black">
+                          <span class="headline">Edit Bookmark</span>
+                        </v-card-title>
+                        <v-card-text>
+                          <v-container grid-list-md>
+                            <v-layout wrap>
+                              <v-flex xs12>
+                                <v-text-field solo v-model="title" required></v-text-field>
+                              </v-flex>
+                              <v-flex xs12>
+                                <v-textarea solo v-model="subtitle" name="subtitle" v-bind:label="item.subtitle" required></v-textarea>
+                              </v-flex>
+                              <v-flex xs12>
+                                <v-text-field solo v-model="link" v-bind:label="item.link" required></v-text-field>
+                              </v-flex>
+                            </v-layout>
+                          </v-container>
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn color="blue darken-1" flat @click.native="edit_dialog = false; this.title = ''; this.subtitle = ''; this.link = ''">Close</v-btn>
+                          <v-btn color="blue darken-1" flat @click.native="updateItem(item.id)">Submit</v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </v-flex>
+                  <v-flex xs6>
+                    <v-btn icon ripple @click="deleteItem(item.id)" xs6>
+                      <v-icon color="red">fas fa-trash</v-icon>
+                    </v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-list-tile-actions>
             </v-list-tile>
           </v-list>
         </v-card>
@@ -85,6 +121,7 @@
         isConnected: true,
         items: [],
         dialog: false,
+        edit_dialog: false,
         title: '',
         subtitle: '',
         link: ''
@@ -98,19 +135,59 @@
       },
       submit() {
         fetch('/bookmarks', {
-          method: 'POST',
-          headers: { 'Content-Type' : 'application/json'},
-          body: JSON.stringify({title: this.title, subtitle: this.subtitle, link: this.link})
-        })
-        .then(res => res.json())
-        .then(body => { this.items = body; this.dialog = false; this.title = ''; this.subtitle = ''; this.link = ''; })
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              title: this.title,
+              subtitle: this.subtitle,
+              link: this.link
+            })
+          })
+          .then(res => res.json())
+          .then(body => {
+            this.items = body
+            this.dialog = false
+            this.title = ''
+            this.subtitle = ''
+            this.link = ''
+          })
       },
       deleteItem(id) {
         fetch(`/bookmarks/${id}`, {
-          method: 'DELETE'
+            method: 'DELETE'
+          })
+          .then(res => res.json())
+          .then(body => this.items = body)
+      },
+      updateItem(id) {
+        fetch(`/bookmarks/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json'},
+          body: JSON.stringify({
+              title: this.title,
+              subtitle: this.subtitle,
+              link: this.link
+            })
         })
         .then(res => res.json())
-        .then(body => this.items = body)
+        .then(body => {
+          this.items = body
+          this.edit_dialog = false
+          this.title = ''
+          this.subtitle = ''
+          this.link = ''
+          })
+      },
+      editItem(id) {
+        this.items.forEach(bookmark => {
+          if (bookmark.id === id) {
+            this.title = bookmark.title
+            this.subtitle = bookmark.subtitle
+            this.link = bookmark.link
+          }
+        })
       }
     },
     mounted() {

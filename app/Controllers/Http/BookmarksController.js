@@ -95,7 +95,13 @@ class BookmarkController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request, response, auth }) {
+    const payload = request.only(['title', 'subtitle', 'link'])
+    await auth.getUser()
+    const user = await User.find(auth.user.id)
+    const bookmark = await user.bookmarks().where('id', params.id).update(payload)
+    const bookmarks = await user.bookmarks().fetch()
+    return response.json(bookmarks)
   }
 
   /**
