@@ -10,7 +10,15 @@
 </template>
 
 <script>
-  export default {}
+  import router from '@/router'
+
+  export default {
+    mounted () {
+      fetch('/isconnected')
+      .then(res => res.text())
+      .then(body => body == 'connected' ? router.push('dashboard') : false)
+    }
+  }
 
 </script>
 
