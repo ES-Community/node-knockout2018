@@ -19,5 +19,6 @@ const Route = use('Route')
 Route.post('/signup', 'AuthController.signup')
 Route.post('/login', 'AuthController.login')
 Route.get('/logout', 'AuthController.logout')
+Route.get('/isconnected', 'AuthController.isconnected')
 
 Route.resource('bookmarks', 'BookmarksController')
