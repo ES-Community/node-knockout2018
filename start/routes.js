@@ -16,7 +16,7 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.post('/signup', 'SignupController.index')
-Route.post('/login', 'LoginController.index')
+Route.post('/signup', 'AuthController.SignUp')
+Route.post('/login', 'LoginController.Login')
 
 Route.resource('bookmarks', 'BookmarksController')
