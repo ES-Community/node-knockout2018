@@ -6,6 +6,9 @@
           <v-toolbar-title>Login</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
+          <v-alert :value="error" type="error">
+            Something got wrong with your credentials
+          </v-alert>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-container>
               <v-text-field prepend-icon="person" v-model="email" label="E-mail" name="email" required solo></v-text-field>
@@ -23,18 +26,27 @@
 </template>
 
 <script>
+import router from '@/router'
+
 export default {
   data() {
       return {
         email: '',
         password: '',
-        show1: false
+        show1: false,
+        error: false
       }
     },
 
     methods: {
       submit() {
-        //
+        fetch('/login', {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify({uid: this.email, password: this.password})
+        })
+        .then(res => res.text())
+        .then(body => body == 'loggedin' ? router.push('dashboard') : this.error = trues)
       }
     }
 }

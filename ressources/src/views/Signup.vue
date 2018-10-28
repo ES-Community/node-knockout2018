@@ -46,7 +46,7 @@
 
     methods: {
       submit() {
-        fetch('http://localhost:3333/signup', {
+        fetch('/signup', {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify({
