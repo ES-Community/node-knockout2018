@@ -1,5 +1,14 @@
 'use strict'
 
+const Database = use('Database')
+
+/** @typedef {import('@adonisjs/framework/src/Model')} User */
+const User = use('App/Models/User')
+
+/** @typedef {import('@adonisjs/framework/src/Model')} Bookmark */
+const Bookmark = use('App/Models/Bookmark')
+
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -15,9 +24,13 @@ class BookmarkController {
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {Auth} ctx.auth
    */
-  async index ({ request, response, view }) {
+  async index ({ response, auth }) {
+    await auth.getUser()
+    let user = await User.find(auth.user.id)
+    let bookmarks = await user.bookmarks().fetch()
+    return response.json(bookmarks)
   }
 
   /**
@@ -29,7 +42,7 @@ class BookmarkController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
+  async create ({ request, auth, response }) {
   }
 
   /**
@@ -40,7 +53,14 @@ class BookmarkController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response, auth }) {
+    const payload = request.only(['title', 'subtitle', 'link'])
+    await auth.getUser()
+    const user = await User.find(auth.user.id)
+    const bookmark = await user.bookmarks().create(payload)
+    await user.save()
+    const bookmarks = await user.bookmarks().fetch()
+    return response.json(bookmarks)
   }
 
   /**

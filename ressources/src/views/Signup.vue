@@ -60,6 +60,7 @@
           })
           .then(res => res.text())
           .then(body => body == 'loggedin' ? router.push('dashboard') : this.error = true)
+          .catch(e => this.error = true)
       }
     }
   }

@@ -9,7 +9,7 @@
           <v-alert :value="error" type="error">
             Something got wrong with your credentials
           </v-alert>
-          <v-form ref="form" v-model="valid" lazy-validation>
+          <v-form ref="form">
             <v-container>
               <v-text-field prepend-icon="person" v-model="email" label="E-mail" name="email" required solo></v-text-field>
               <v-text-field prepend-icon="lock" v-model="password" label="Password" :append-icon="show1 ? 'visibility_off' : 'visibility'" :type="show1 ? 'text' : 'password'"
@@ -47,6 +47,7 @@ export default {
         })
         .then(res => res.text())
         .then(body => body == 'loggedin' ? router.push('dashboard') : this.error = trues)
+        .catch(e => this.error = true)
       }
     }
 }
